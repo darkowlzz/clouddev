@@ -1,5 +1,7 @@
 # clouddev
 
+[![Go workflow](https://github.com/darkowlzz/clouddev/workflows/Go/badge.svg)](https://github.com/darkowlzz/clouddev/actions)
+
 Go implementation of [remotedev](https://github.com/darkowlzz/remotedev).
 
 ## Development

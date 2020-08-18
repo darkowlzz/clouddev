@@ -39,6 +39,9 @@ cobra: ## Run cobra. Pass args with ARGS="arg1 arg2..."
 lint: golangci-lint ## Run code lint.
 	$(GOLANGCI_LINT) run -v
 
+test: ## Run all the tests.
+	go test -mod=vendor -v -race ./... -count=1
+
 ##############################
 # Third-party tools          #
 ##############################

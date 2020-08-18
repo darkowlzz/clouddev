@@ -22,13 +22,13 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
 
+    - name: Run golangci-lint
+      uses: golangci/golangci-lint-action@v1.2.1
+      with:
+        version: v1.30
+
     - name: Build
       run: make clouddev
 
     - name: Test
       run: make test
-
-    - name: Run golangci-lint
-      uses: golangci/golangci-lint-action@v1.2.1
-      with:
-        version: v1.30

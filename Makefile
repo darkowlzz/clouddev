@@ -1,6 +1,6 @@
 PROJECT = github.com/darkowlzz/clouddev
 GOARCH ?= amd64
-GO_VERSION = 1.14.2
+GO_VERSION = 1.15.0
 CACHE_DIR = ${CURDIR}/.cache
 
 BIN_DIR = ${CURDIR}/bin

@@ -1,7 +1,11 @@
-CACHE_DIR = $(shell pwd)/.cache
 PROJECT = github.com/darkowlzz/clouddev
 GOARCH ?= amd64
 GO_VERSION = 1.14.2
+CACHE_DIR = ${CURDIR}/.cache
+
+BIN_DIR = ${CURDIR}/bin
+GOLANGCI_LINT = ${BIN_DIR}/golangci-lint
+GOLANGCI_LINT_VERSION = "v1.30.0"
 
 
 .PHONY: help
@@ -31,6 +35,20 @@ tidy: ## Prune, add and vendor go dependencies.
 
 cobra: ## Run cobra. Pass args with ARGS="arg1 arg2..."
 	go run -mod=vendor ./vendor/github.com/spf13/cobra/cobra $(ARGS)
+
+lint: golangci-lint ## Run code lint.
+	$(GOLANGCI_LINT) run -v
+
+##############################
+# Third-party tools          #
+##############################
+
+.PHONY: golangci-lint
+
+golangci-lint:
+	@if [ ! -f $(GOLANGCI_LINT) ]; then \
+		curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(BIN_DIR) $(GOLANGCI_LINT_VERSION); \
+	fi
 
 
 # This target matches any target ending in '-docker' eg. 'tidy-docker'. This

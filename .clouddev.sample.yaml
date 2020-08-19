@@ -1,0 +1,10 @@
+name: clouddev-dev-env
+image: <image-id>
+region: <region-id>
+size: <machine-type>
+sshKeys:
+- <ssh-key-id>
+tags:
+- clouddev
+pulumi:
+  stack: clouddev

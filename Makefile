@@ -27,7 +27,7 @@ help: ## Display this help.
 .PHONY: tidy clouddev
 
 clouddev: ## Build clouddev binary.
-	go build -mod=vendor -o bin/clouddev .
+	go build -mod=vendor -o bin/clouddev $(shell ./build/print-ldflags.sh) .
 
 tidy: ## Prune, add and vendor go dependencies.
 	go mod tidy -v

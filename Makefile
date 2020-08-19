@@ -27,7 +27,7 @@ help: ## Display this help.
 .PHONY: tidy clouddev install cobra lint test
 
 clouddev: ## Build clouddev binary.
-	go build -mod=vendor -o bin/clouddev $(shell ./build/print-ldflags.sh) .
+	go build -v -mod=vendor -o bin/clouddev $(shell ./build/print-ldflags.sh) .
 
 install: clouddev ## Build and install clouddev.
 	cp ./bin/clouddev $(shell go env GOPATH)/bin/clouddev

@@ -17,8 +17,6 @@ var upCmd = &cobra.Command{
 	Short: "Provision cloud environment",
 	Long:  `Provision cloud environment as per the provided configuration.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("up called")
-
 		stackName := viper.GetString("pulumi.stack")
 		fmt.Println("StackName:", stackName)
 
@@ -27,7 +25,9 @@ var upCmd = &cobra.Command{
 			return err
 		}
 
-		if err := up(); err != nil {
+		fmt.Println("STACK INITIALIZATION SUCCESSFUL")
+
+		if err := up(stackName); err != nil {
 			return err
 		}
 
@@ -49,7 +49,7 @@ func init() {
 	// upCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func up() error {
+func up(stackName string) error {
 	dropletName := viper.GetString("name")
 
 	// Create droplet args.
@@ -77,18 +77,22 @@ func up() error {
 	}
 	droplet.Tags = tags
 
-	pulumi.Run(func(ctx *pulumi.Context) error {
-		// Image:  pulumi.String("ubuntu-18-04-x64"),
-		droplet, err := do.NewDroplet(ctx, dropletName, droplet)
-		if err != nil {
-			return err
-		}
+	fmt.Println("PULUMI RUN!!!")
 
-		ctx.Export("name", droplet.Name)
-		ctx.Export("ip", droplet.Ipv4Address)
+	return cpulumi.Up(stackName, dropletName, droplet)
 
-		return nil
-	})
+	// pulumi.Run(func(ctx *pulumi.Context) error {
+	//     // Image:  pulumi.String("ubuntu-18-04-x64"),
+	//     droplet, err := do.NewDroplet(ctx, dropletName, droplet)
+	//     if err != nil {
+	//         return err
+	//     }
 
-	return nil
+	//     ctx.Export("name", droplet.Name)
+	//     ctx.Export("ip", droplet.Ipv4Address)
+
+	//     return nil
+	// })
+
+	// return nil
 }
